@@ -7,11 +7,11 @@
 set -e
 set -x
 # Set timezone
-# sudo timedatectl set-timezone Asia/Kolkata
+# sudo timedatectl set-timezone America/New_York
 
-# Update & Upgrade
+# Upgrade
 sudo apt-get update
-# sudo apt-get upgrade -y
+sudo apt-get upgrade -y
 
 # Add swap space on Ubuntu 22 (1000MB)
 sudo fallocate -l 1G /swapfile
@@ -24,50 +24,50 @@ sudo sysctl vm.swappiness=10
 
 # install mysql-server
 sudo apt-get install -y mysql-server
-#sudo apt-get install mysql-client
-#sudo apt-get install -y libmysqlclient-dev
+sudo apt-get install mysql-client
+sudo apt-get install -y libmysqlclient-dev
 
 # install apache2
 sudo apt-get install -y apache2
-#sudo apt-get install apache2-doc
-#sudo apt-get install apache2-utils
+sudo apt-get install apache2-doc
+sudo apt-get install apache2-utils
 
 # install php
-#sudo apt-get install -y libapache2-mod-php7.4
-sudo apt-get install php7.4 -y
-#sudo apt-get install php7.4-curl
-#sudo apt-get install php7.4-common
-#sudo apt-get install -y php7.4-dev
-#sudo apt-get install -y php7.4-gd
-#sudo apt-get install php-pear
-#sudo apt-get install -y php-imagick
-#sudo apt-get install php7.4-mysql
-#sudo apt-get install -y php7.4-ps
-#sudo apt-get install php7.4-xsl
-#sudo apt-get install -y libmcrypt-dev
-sudo apt-get install php7.4-mbstring -y
-#sudo apt-get install php7.4-intl
-#sudo apt-get install php7.4-cli
-#sudo apt-get install php7.4-bcmath
+sudo apt-get install -y libapache2-mod-php8.1
+sudo apt-get install php8.1
+sudo apt-get install php8.1-curl
+sudo apt-get install php8.1-common
+sudo apt-get install -y php8.1-dev
+sudo apt-get install -y php8.1-gd
+sudo apt-get install php-pear
+sudo apt-get install -y php-imagick
+sudo apt-get install php8.1-mysql
+sudo apt-get install -y php8.1-ps
+sudo apt-get install php8.1-xsl
+sudo apt-get install -y libmcrypt-dev
+sudo apt-get install php8.1-mbstring -y
+sudo apt-get install php8.1-intl
+sudo apt-get install php8.1-cli
+sudo apt-get install php8.1-bcmath
 
 sudo needrestart -u NeedRestart::UI::stdio -r a
 
-#sudo apt-get install php7.4-zip -y
-#sudo apt-get install php7.4-fileinfo
-#sudo apt-get install php7.4-xml
-#sudo apt-get install php7.4-soap
+sudo apt-get install php8.1-zip -y
+sudo apt-get install php8.1-fileinfo
+sudo apt-get install php8.1-xml
+sudo apt-get install php8.1-soap
 sudo needrestart -u NeedRestart::UI::stdio -r a
 
 # install python3
-#sudo apt install python3
-#sudo apt install -y python3-pip
-#sudo pip3 install numpy
-#sudo pip3 install pandas
-#sudo pip3 install mysqlclient
-#sudo pip3 install mysql-connector-python
-#sudo pip3 install pymysql
-#sudo pip3 install lxml
-#sudo pip3 install SQLAlchemy
+sudo apt install python3
+sudo apt install -y python3-pip
+sudo pip3 install numpy
+sudo pip3 install pandas
+sudo pip3 install mysqlclient
+sudo pip3 install mysql-connector-python
+sudo pip3 install pymysql
+sudo pip3 install lxml
+sudo pip3 install SQLAlchemy
 
 # enable mod_rewrite
 sudo a2enmod rewrite
@@ -86,7 +86,7 @@ sudo mv composer.phar /usr/local/bin/composer
 sudo apt-get install git
 
 # set apache2 directory for symfony
-sudo curl https://raw.githubusercontent.com/kparui2022/aws-cloudformation/main/settings/typo3.conf -o /etc/apache2/sites-available/typo3.conf
+sudo curl https://raw.githubusercontent.com/LuminiCode/aws-cloudformation-ubuntu-lamp-symfony/master/settings/typo3.conf -o /etc/apache2/sites-available/typo3.conf
 a1='/var/www/html/typo3/public'
 b1='/var/www/html/'"$1"'/public'
 sudo sed -i 's,'"$a1"','"$b1"',' /etc/apache2/sites-available/typo3.conf
@@ -104,8 +104,8 @@ sudo mysql -e "ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_passwo
 if [ "$7" == "true" ]
 then
   # Download & unzip the last phpMyAdmin-version
-  sudo wget https://www.phpmyadmin.net/downloads/phpMyAdmin-latest-all-languages.zip
-  sudo unzip phpMyAdmin-latest-all-languages.zip
+  wget https://www.phpmyadmin.net/downloads/phpMyAdmin-latest-all-languages.zip
+  unzip phpMyAdmin-latest-all-languages.zip
   # create folder /var/www/phpmyadmin and copy the unziped file
   sudo mkdir /var/www/phpmyadmin
   sudo cp -r phpMyAdmin-*/* /var/www/phpmyadmin/
@@ -113,7 +113,7 @@ then
   sudo chown -R ubuntu:ubuntu /var/www/phpmyadmin
   sudo chmod -R 755 /var/www/phpmyadmin
   # set configuration
-  sudo curl https://raw.githubusercontent.com/kparui2022/aws-cloudformation/main/settings/phpmyadmin.txt -o /etc/apache2/conf-available/phpmyadmin.conf
+  sudo curl https://raw.githubusercontent.com/LuminiCode/aws-cloudformation-ubuntu-lamp-symfony/master/settings/phpmyadmin.txt -o /etc/apache2/conf-available/phpmyadmin.conf
   # Activate Configuration
   sudo a2enconf phpmyadmin
   # solve tmp error
@@ -130,7 +130,7 @@ then
   e="define('CONFIG_DIR', '');"
   f="define('CONFIG_DIR', '/var/www/phpmyadmin/');"
   sudo sed -i "s|$e|$f|g" /var/www/phpmyadmin/libraries/vendor_config.php
-  sudo mv /var/www/phpmyadmin/config.sample.inc.php /var/www/phpmyadmin/config.inc.php
+  mv /var/www/phpmyadmin/config.sample.inc.php /var/www/phpmyadmin/config.inc.php
   NEW_PASSWORD=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 32 | head -n 1)
   j="blowfish_secret'] = '';"
   k="blowfish_secret'] = '$NEW_PASSWORD';"
@@ -140,17 +140,17 @@ fi
 sudo systemctl reload apache2
 
 # configure php.ini
-sudo sed -i 's/memory_limit = .*/memory_limit = '850M'/' /etc/php/7.4/apache2/php.ini
-sudo sed -i 's/max_execution_time = .*/max_execution_time = '240'/' /etc/php/7.4/apache2/php.ini
-sudo sed -i 's/;max_input_vars = .*/max_input_vars = '1500'/' /etc/php/7.4/apache2/php.ini
-sudo sed -i 's/post_max_size = .*/post_max_size = '10M'/' /etc/php/7.4/apache2/php.ini
-sudo sed -i 's/upload_max_filesize = .*/upload_max_filesize = '10M'/' /etc/php/7.4/apache2/php.ini
+sudo sed -i 's/memory_limit = .*/memory_limit = '850M'/' /etc/php/8.1/apache2/php.ini
+sudo sed -i 's/max_execution_time = .*/max_execution_time = '240'/' /etc/php/8.1/apache2/php.ini
+sudo sed -i 's/;max_input_vars = .*/max_input_vars = '1500'/' /etc/php/8.1/apache2/php.ini
+sudo sed -i 's/post_max_size = .*/post_max_size = '10M'/' /etc/php/8.1/apache2/php.ini
+sudo sed -i 's/upload_max_filesize = .*/upload_max_filesize = '10M'/' /etc/php/8.1/apache2/php.ini
 
-sudo sed -i 's,;extension=pdo_mysql,extension=pdo_mysql,g' /etc/php/7.4/apache2/php.ini
-sudo sed -i 's,;extension=mbstring,extension=mbstring,g' /etc/php/7.4/apache2/php.ini
+sudo sed -i 's,;extension=pdo_mysql,extension=pdo_mysql,g' /etc/php/8.1/apache2/php.ini
+sudo sed -i 's,;extension=mbstring,extension=mbstring,g' /etc/php/8.1/apache2/php.ini
 
 # install other tools for typo3
-#sudo apt-get install imagemagick -y
+sudo apt-get install imagemagick -y
 
 # restart apache
 sudo /etc/init.d/apache2 restart
@@ -171,7 +171,7 @@ sudo chown ubuntu:ubuntu /var/www/html/ -R
 sudo chmod 777 -R /var/www/html/ 
 
 # set apache2 directory for symfony
-#sudo curl https://raw.githubusercontent.com/kparui2022/aws-cloudformation/main/settings/000-default.conf -o /etc/apache2/sites-available/000-default.conf
+#sudo curl https://raw.githubusercontent.com/LuminiCode/aws-cloudformation-ubuntu-lamp-symfony/master/settings/000-default.conf -o /etc/apache2/sites-available/000-default.conf
 
 #a1='\/var\/www\/html'
 #b1='\/var\/www\/html\/'"$1"'\/public'
@@ -179,8 +179,8 @@ sudo chmod 777 -R /var/www/html/
 
 a2=';extension=intl'
 b2='extension=intl'
-sudo sed -i 's,'"$a2"','"$b2"',g' /etc/php/7.4/apache2/php.ini
-sudo sed -i 's,'"$a2"','"$b2"',g' /etc/php/7.4/cli/php.ini
+sudo sed -i 's,'"$a2"','"$b2"',g' /etc/php/8.1/apache2/php.ini
+sudo sed -i 's,'"$a2"','"$b2"',g' /etc/php/8.1/cli/php.ini
 
 #install typo3
 cd /var/www/html
@@ -198,17 +198,17 @@ sudo chmod 777 -R /var/www/html/
 a4='/var/www/html/'"$1"''
 sudo chown -R www-data:www-data $a4
 
-sudo curl https://raw.githubusercontent.com/kparui2022/aws-cloudformation/main/settings/.htaccess -o $a4/.htaccess
+sudo curl https://raw.githubusercontent.com/LuminiCode/aws-cloudformation-ubuntu-lamp-symfony/master/settings/.htaccess -o $a4/.htaccess
 
 
 # install AWS CLI
-sudo curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
 unzip awscliv2.zip
 sudo ./aws/install
 sudo rm -r awscliv2.zip
 
 
-# sudo rm -r /etc/apache2/sites-enabled/000-default.conf
+sudo rm -r /etc/apache2/sites-enabled/000-default.conf
 
 # restart apache
 sudo /etc/init.d/apache2 restart
@@ -217,6 +217,6 @@ sudo /etc/init.d/apache2 restart
 if [ "$7" == "true" ]
 then
   # delete temporary files and folders
-  #sudo rm -r /phpMyAdmin-5.2.0-all-languages
-  #sudo rm -r /phpMyAdmin-latest-all-languages.zip
+  sudo rm -r /phpMyAdmin-5.2.0-all-languages
+  sudo rm -r /phpMyAdmin-latest-all-languages.zip
 fi
