@@ -7,11 +7,11 @@
 set -e
 set -x
 # Set timezone
-# sudo timedatectl set-timezone America/New_York
+# sudo timedatectl set-timezone Asia/Kolkata
 
-# Upgrade
+# Update & Upgrade
 sudo apt-get update
-sudo apt-get upgrade -y
+# sudo apt-get upgrade -y
 
 # Add swap space on Ubuntu 20 (1000MB)
 sudo fallocate -l 1G /swapfile
@@ -33,19 +33,19 @@ sudo apt-get install apache2-doc
 sudo apt-get install apache2-utils
 
 # install php
-sudo apt-get install -y libapache2-mod-php8.1
-sudo apt-get install php8.1
-sudo apt-get install php8.1-curl
-sudo apt-get install php8.1-common
-sudo apt-get install -y php8.1-dev
-sudo apt-get install -y php8.1-gd
+sudo apt-get install -y libapache2-mod-php7.4
+sudo apt-get install php7.4
+sudo apt-get install php7.4-curl
+sudo apt-get install php7.4-common
+sudo apt-get install -y php7.4-dev
+sudo apt-get install -y php7.4-gd
 sudo apt-get install php-pear
 sudo apt-get install -y php-imagick
-sudo apt-get install php8.1-mysql
-sudo apt-get install -y php8.1-ps
-sudo apt-get install php8.1-xsl
+sudo apt-get install php7.4-mysql
+sudo apt-get install -y php7.4-ps
+sudo apt-get install php7.4-xsl
 sudo apt-get install -y libmcrypt-dev
-sudo apt-get install php8.1-mbstring -y
+sudo apt-get install php7.4-mbstring -y
 
 # install python3
 sudo apt install python3
@@ -75,7 +75,7 @@ sudo mv composer.phar /usr/local/bin/composer
 sudo apt-get install git
 
 # set apache2 directory for symfony
-sudo curl https://raw.githubusercontent.com/LuminiCode/aws-cloudformation-ubuntu-lamp-symfony/master/settings/000-default.conf -o /etc/apache2/sites-available/000-default.conf
+sudo curl https://raw.githubusercontent.com/kparui2022/aws-cloudformation/main/settings/000-default.conf -o /etc/apache2/sites-available/000-default.conf
 a1='/var/www/html'
 b1='/var/www/html/'"$1"''/public
 sudo sed -i 's,'"$a1"','"$b1"',' /etc/apache2/sites-available/000-default.conf
@@ -101,7 +101,7 @@ then
   sudo chown -R ubuntu:ubuntu /var/www/phpmyadmin
   sudo chmod -R 755 /var/www/phpmyadmin
   # set configuration
-  sudo curl https://raw.githubusercontent.com/LuminiCode/aws-cloudformation-ubuntu-lamp-symfony/master/settings/phpmyadmin.txt -o /etc/apache2/conf-available/phpmyadmin.conf
+  sudo curl https://raw.githubusercontent.com/kparui2022/aws-cloudformation/main/settings/phpmyadmin.txt -o /etc/apache2/conf-available/phpmyadmin.conf
   # Activate Configuration
   sudo a2enconf phpmyadmin
   # solve tmp error
@@ -128,7 +128,7 @@ fi
 sudo systemctl reload apache2
 
 # configure php.ini
-sudo sed -i 's/memory_limit = .*/memory_limit = '850M'/' /etc/php/8.1/apache2/php.ini
+sudo sed -i 's/memory_limit = .*/memory_limit = '850M'/' /etc/php/7.4/apache2/php.ini
 
 # restart apache
 sudo /etc/init.d/apache2 restart
@@ -159,7 +159,7 @@ then
     s3='https://github.com/'
     s4=${s1/.git/$s2}
     s4=${s4/$s3/$s2}    
-    sudo curl -u "${10}":"${11}" https://raw.githubusercontent.com/"${s4}"/master/aws-install-script-sg.sh -o /var/www/html/settings/aws-install-script-sg.sh
+    sudo curl -u "${10}":"${11}" https://raw.githubusercontent.com/"${s4}"/main/aws-install-script-sg.sh -o /var/www/html/settings/aws-install-script-sg.sh
     
     bash /var/www/html/settings/aws-install-script-sg.sh $1 $2 $3 $4 "${10}" "${11}"
     sudo rm -r /var/www/html/settings
@@ -185,7 +185,7 @@ sudo chmod 777 -R /var/www/html/
 curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
 unzip awscliv2.zip
 sudo ./aws/install
-sudo rm -r awscliv2.zip
+# sudo rm -r awscliv2.zip
 
 # restart apache
 sudo /etc/init.d/apache2 restart
@@ -193,6 +193,6 @@ sudo /etc/init.d/apache2 restart
 if [ "$7" == "true" ]
 then
   # delete temporary files and folders
-  sudo rm -r /phpMyAdmin-5.1.1-all-languages
-  sudo rm -r /phpMyAdmin-latest-all-languages.zip
+  # sudo rm -r /phpMyAdmin-5.1.1-all-languages
+  # sudo rm -r /phpMyAdmin-latest-all-languages.zip
 fi
