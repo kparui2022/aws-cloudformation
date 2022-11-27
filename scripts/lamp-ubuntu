@@ -32,18 +32,18 @@ sudo apt-get install -y apache2
 
 # install php
 #sudo apt-get install -y libapache2-mod-php7.4
-sudo apt-get install php7.4
+sudo apt-get install -y php7.4
 #sudo apt-get install php7.4-curl
 #sudo apt-get install php7.4-common
 #sudo apt-get install -y php7.4-dev
 #sudo apt-get install -y php7.4-gd
 #sudo apt-get install php-pear
 #sudo apt-get install -y php-imagick
-sudo apt-get install php7.4-mysql
+sudo apt-get install -y php7.4-mysql
 #sudo apt-get install -y php7.4-ps
 #sudo apt-get install php7.4-xsl
 #sudo apt-get install -y libmcrypt-dev
-sudo apt-get install php7.4-mbstring -y
+sudo apt-get install -y php7.4-mbstring -y
 
 # enable mod_rewrite
 sudo a2enmod rewrite
@@ -53,7 +53,7 @@ sudo apt-get install -y zip
 sudo apt-get install -y unzip
 
 # install git
-sudo apt-get install git
+sudo apt-get install -y git
 
 # set mysql
 sudo mysql -e "CREATE DATABASE $4 /*\!40100 DEFAULT CHARACTER SET utf8 */;"
@@ -131,7 +131,7 @@ sudo curl https://raw.githubusercontent.com/kparui2022/aws-cloudformation/main/s
 # install AWS CLI
 curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
 unzip awscliv2.zip
-sudo ./aws/install
+sudo ./aws/install -y
 sudo rm -r awscliv2.zip
 
 # restart apache
