@@ -109,7 +109,7 @@ Resources:
           - - |
               #!/bin/bash
             - |
-              sudo curl https://raw.githubusercontent.com/LuminiCode/aws-cloudformation-ubuntu-lamp-symfony/master/scripts/lamp -o /lamp
+              sudo curl https://raw.githubusercontent.com/kparui2022/aws-cloudformation/main/scripts/lamp-ubuntu -o /lamp-ubuntu
             - |
               sudo chmod +x /lamp-ubuntu
             - |
