@@ -98,7 +98,7 @@ Resources:
   WebServer:
     Type: 'AWS::EC2::Instance'
     Properties:
-      ImageId: ami-062df10d14676e201
+      ImageId: ami-024c319d5d14b463e
       InstanceType: !Ref InstanceType
       SecurityGroups:
         - !Ref WebServerSecurityGroup
