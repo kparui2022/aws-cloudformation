@@ -1,6 +1,5 @@
 # ComandLine Arguments:
- $1 (StackName) | $2 (DBUser) | $3 (DB Password) | $4 (DB Name) | $5 (DB Root Password)
- $6 (phpMyAdmin installation)
+ $1 ("StackName") | $2 ("DBUser") | $3 ("DB Password") | $4 ("DB Name") | $5 ("DB Root Password") $6 ("phpMyAdmin installation")
 
 set -e
 set -x
