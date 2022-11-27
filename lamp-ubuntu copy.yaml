@@ -75,7 +75,7 @@ Resources:
             - |
               sudo chmod +x /lamp-ubuntu
             - |
-              /./lamp-ubuntu ${AWS::StackName} ${DBUser} ${DBPassword} ${DBName} ${DBRootPassword} ${PhpMyAdminInstallation}
+              sudo /./lamp-ubuntu ${AWS::StackName} ${DBUser} ${DBPassword} ${DBName} ${DBRootPassword} ${PhpMyAdminInstallation}
   
   WebServerSecurityGroup:
     Type: 'AWS::EC2::SecurityGroup'
