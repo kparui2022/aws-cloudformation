@@ -109,19 +109,18 @@ Resources:
           - - |
               #!/bin/bash
             - |
-              #sudo curl https://raw.githubusercontent.com/LuminiCode/aws-cloudformation-ubuntu-lamp-symfony/master/scripts/lamp -o /lamp
+              sudo curl https://raw.githubusercontent.com/LuminiCode/aws-cloudformation-ubuntu-lamp-symfony/master/scripts/lamp -o /lamp
             - |
-              #sudo chmod +x /lamp-ubuntu
+              sudo chmod +x /lamp-ubuntu
             - |
-              #/./lamp-ubuntu ${!Ref AWS::StackName} ${DBUser} ${DBPassword} ${DBName} ${DBRootPassword} ${PhpMyAdminInstallation}
-            - |
-              if [ ${PhpMyAdminInstallation} == "true" ]
-              then
-              sudo curl https://raw.githubusercontent.com/kparui2022/aws-cloudformation/main/scripts/lamp-ubuntu -o /lamp-ubuntu
-               # GitHub data have to be at the end and use Token
-                sudo chmod +x /lamp-ubuntu
-                /./lamp-ubuntu ${AWS::StackName} ${DBUser} ${DBPassword} ${DBName} ${DBRootPassword} ${PhpMyAdminInstallation}
-              fi
+              /./lamp-ubuntu ${!Ref AWS::StackName} ${DBUser} ${DBPassword} ${DBName} ${DBRootPassword} ${PhpMyAdminInstallation}
+#              if [ ${PhpMyAdminInstallation} == "true" ]
+#              then
+#              sudo curl https://raw.githubusercontent.com/kparui2022/aws-cloudformation/main/scripts/lamp-ubuntu -o /lamp-ubuntu
+#               # GitHub data have to be at the end and use Token
+#                sudo chmod +x /lamp-ubuntu
+#                /./lamp-ubuntu ${AWS::StackName} ${DBUser} ${DBPassword} ${DBName} ${DBRootPassword} ${PhpMyAdminInstallation}
+#              fi
   
   WebServerSecurityGroup:
     Type: 'AWS::EC2::SecurityGroup'
