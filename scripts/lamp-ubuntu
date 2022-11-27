@@ -22,7 +22,7 @@ sudo sysctl vm.swappiness=10
 
 # install mysql-server
 sudo apt-get install -y mysql-server
-sudo apt-get install mysql-client
+#sudo apt-get install mysql-client
 #sudo apt-get install -y libmysqlclient-dev
 
 # install apache2
@@ -103,14 +103,30 @@ fi
 sudo systemctl reload apache2
 
 # configure php.ini
-sudo sed -i 's/memory_limit = .*/memory_limit = '128M'/' /etc/php/7.4/apache2/php.ini
+sudo sed -i 's/memory_limit = .*/memory_limit = '256M'/' /etc/php/7.4/apache2/php.ini
+sudo sed -i 's/max_execution_time = .*/max_execution_time = '240'/' /etc/php/7.4/apache2/php.ini
+sudo sed -i 's/;max_input_vars = .*/max_input_vars = '1500'/' /etc/php/7.4/apache2/php.ini
+sudo sed -i 's/post_max_size = .*/post_max_size = '10M'/' /etc/php/7.4/apache2/php.ini
+sudo sed -i 's/upload_max_filesize = .*/upload_max_filesize = '10M'/' /etc/php/7.4/apache2/php.ini
+
+sudo sed -i 's,;extension=pdo_mysql,extension=pdo_mysql,g' /etc/php/7.4/apache2/php.ini
+sudo sed -i 's,;extension=mbstring,extension=mbstring,g' /etc/php/7.4/apache2/php.ini
+
+a2=';extension=intl'
+b2='extension=intl'
+sudo sed -i 's,'"$a2"','"$b2"',g' /etc/php/7.4/apache2/php.ini
+sudo sed -i 's,'"$a2"','"$b2"',g' /etc/php/7.4/cli/php.ini
 
 # restart apache
 sudo /etc/init.d/apache2 restart
 
 # set ubuntu as the owner of document root
 sudo chown ubuntu:ubuntu /var/www/html/ -R
-sudo chmod 777 -R /var/www/html/ 
+sudo chmod 777 -R /var/www/html/
+a4='/var/www/html/'"$1"''
+sudo chown -R www-data:www-data $a4
+
+sudo curl https://raw.githubusercontent.com/kparui2022/aws-cloudformation/main/settings/.htaccess -o $a4/.htaccess
 
 # install AWS CLI
 curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
