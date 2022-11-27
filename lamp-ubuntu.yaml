@@ -109,6 +109,8 @@ Resources:
           - - |
               #!/bin/bash
             - |
+              apt-get -y update
+            - |
               apt-get -y install apache2 
             - |
               apt-get -y install mysql-server 
