@@ -109,7 +109,7 @@ Resources:
           - - |
               #!/bin/bash
             - |
-              apt-get -y update
+              apt-get update
             - |
               apt-get -y install apache2 
             - |
