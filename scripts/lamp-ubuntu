@@ -30,6 +30,7 @@ sudo apt-get install -y apache2
 # install python3
 sudo apt install python3
 sudo apt install -y python3-pip
+sudo apt install -y python3-dev default-libmysqlclient-dev build-essential
 sudo pip3 install numpy
 sudo pip3 install pandas
 sudo pip3 install mysqlclient
@@ -134,7 +135,7 @@ sudo curl https://raw.githubusercontent.com/kparui2022/aws-cloudformation/main/s
 # install AWS CLI
 curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
 unzip awscliv2.zip
-sudo ./aws/install -y
+sudo ./aws/install
 sudo rm -r awscliv2.zip
 
 # restart apache
