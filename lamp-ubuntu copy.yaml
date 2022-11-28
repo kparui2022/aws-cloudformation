@@ -96,7 +96,7 @@ Resources:
           CidrIp: !Ref SSHLocation
 
 Outputs:
-  PHPMyAdmin URL:
+  PHPMyAdminURL:
     Value: !Join 
       - ''
       - - 'http://'
@@ -105,7 +105,7 @@ Outputs:
           - PublicDnsName
         - /phpmyadmin
     Description: DB Access URL
-  Website URL:
+  WebsiteURL:
     Value: !Join 
       - ''
       - - 'http://'
@@ -113,7 +113,7 @@ Outputs:
           - WebServer
           - PublicDnsName
         - /
-  PHP info URL:
+  PHPinfoURL:
     Value: !Join 
       - ''
       - - 'http://'
