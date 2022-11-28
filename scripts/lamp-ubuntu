@@ -43,7 +43,7 @@ sudo apt-get install -y libmcrypt-dev
 sudo apt-get install -y php7.4-mbstring -y
 
 # creating phpinfo
-sudo curl https://raw.githubusercontent.com/kparui2022/aws-cloudformation/settings/phpinfo.php -o /var/www/html/phpinfo.php
+sudo curl https://raw.githubusercontent.com/kparui2022/aws-cloudformation/main/settings/phpinfo.txt -o /var/www/html/phpinfo.php 
 
 # enable mod_rewrite
 sudo a2enmod rewrite
