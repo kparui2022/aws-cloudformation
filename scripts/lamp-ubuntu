@@ -64,6 +64,8 @@ sudo mysql -e "FLUSH PRIVILEGES;"
 sudo mysql -e "ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY '$5';"
 
 # install phpmyadmin
+if [ "$7" == "true" ]
+then
   # Download & unzip the last phpMyAdmin-version
   wget https://www.phpmyadmin.net/downloads/phpMyAdmin-latest-all-languages.zip
   unzip phpMyAdmin-latest-all-languages.zip
@@ -96,7 +98,9 @@ sudo mysql -e "ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_passwo
   j="blowfish_secret'] = '';"
   k="blowfish_secret'] = '$NEW_PASSWORD';"
   sudo sed -i "s|$j|$k|g" /var/www/phpmyadmin/config.inc.php
-  sudo systemctl reload apache2
+fi
+
+sudo systemctl reload apache2
 
 # configure php.ini
 sudo sed -i 's/memory_limit = .*/memory_limit = '256M'/' /etc/php/7.4/apache2/php.ini
@@ -108,10 +112,10 @@ sudo sed -i 's/upload_max_filesize = .*/upload_max_filesize = '10M'/' /etc/php/7
 sudo sed -i 's,;extension=pdo_mysql,extension=pdo_mysql,g' /etc/php/7.4/apache2/php.ini
 sudo sed -i 's,;extension=mbstring,extension=mbstring,g' /etc/php/7.4/apache2/php.ini
 
-a2=';extension=intl'
-b2='extension=intl'
-sudo sed -i 's,'"$a2"','"$b2"',g' /etc/php/7.4/apache2/php.ini
-sudo sed -i 's,'"$a2"','"$b2"',g' /etc/php/7.4/cli/php.ini
+#a2=';extension=intl'
+#b2='extension=intl'
+#sudo sed -i 's,'"$a2"','"$b2"',g' /etc/php/7.4/apache2/php.ini
+#sudo sed -i 's,'"$a2"','"$b2"',g' /etc/php/7.4/cli/php.ini
 
 # restart apache
 sudo /etc/init.d/apache2 restart
