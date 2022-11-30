@@ -4,7 +4,6 @@ Description: >-
   using a single EC2 instance and a local MySQL database for storage
   **WARNING** This template creates an Amazon EC2 instance.
   You will be billed for the AWS resources used if you create a stack from this template.
-
 Metadata:
   AWS::CloudFormation::Interface:
     ParameterGroups:
