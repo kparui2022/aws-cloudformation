@@ -34,16 +34,16 @@ sudo apt-get install -y mysql-server
 sudo apt-get install -y apache2
 
 # install python3
-sudo apt install python3
-sudo apt install -y python3-pip
-sudo apt install -y python3-dev default-libmysqlclient-dev build-essential
-sudo pip3 install numpy
-sudo pip3 install pandas
-sudo pip3 install mysqlclient
-sudo pip3 install mysql-connector-python
-sudo pip3 install pymysql
-sudo pip3 install lxml
-sudo pip3 install SQLAlchemy
+#sudo apt install python3
+#sudo apt install -y python3-pip
+#sudo apt install -y python3-dev default-libmysqlclient-dev build-essential
+#sudo pip3 install numpy
+#sudo pip3 install pandas
+#sudo pip3 install mysqlclient
+#sudo pip3 install mysql-connector-python
+#sudo pip3 install pymysql
+#sudo pip3 install lxml
+#sudo pip3 install SQLAlchemy
 
 # install php
 sudo apt-get install -y libapache2-mod-php7.4
@@ -145,12 +145,12 @@ sudo rm -r awscliv2.zip
 sudo /etc/init.d/apache2 restart
 
 # set mysql
-sudo mysql -e "CREATE DATABASE $4 /*\!40100 DEFAULT CHARACTER SET utf8 */;"
-sudo mysql -e "CREATE USER $2@localhost IDENTIFIED BY '$3';"
-sudo mysql -e "GRANT ALL PRIVILEGES ON $4.* TO '$2'@'localhost';"
-sudo mysql -e "FLUSH PRIVILEGES;"
+#sudo mysql -e "CREATE DATABASE $4 /*\!40100 DEFAULT CHARACTER SET utf8 */;"
+#sudo mysql -e "CREATE USER $2@localhost IDENTIFIED BY '$3';"
+#sudo mysql -e "GRANT ALL PRIVILEGES ON $4.* TO '$2'@'localhost';"
+#sudo mysql -e "FLUSH PRIVILEGES;"
 
-sudo mysql -e "ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY '$5';"
+#sudo mysql -e "ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY '$5';"
 
 # delete temporary files and folders
 sudo rm -r /phpMyAdmin-5.1.1-all-languages
