@@ -19,6 +19,12 @@ sudo cp /etc/fstab /etc/fstab.bak
 echo '/swapfile none swap sw 0 0' | sudo tee -a /etc/fstab
 sudo sysctl vm.swappiness=10
 
+# install SSM agent for Linux
+sudo snap install amazon-ssm-agent --classic
+sudo snap list amazon-ssm-agent
+sudo snap start amazon-ssm-agent
+sudo snap services amazon-ssm-agent
+
 # install mysql-server
 sudo apt-get install -y mysql-server
 #sudo apt-get install mysql-client
@@ -68,41 +74,38 @@ sudo apt-get install -y unzip
 sudo apt-get install -y git
 
 # install phpmyadmin
-if [ "$7" == "true" ]
-then
-  # Download & unzip the last phpMyAdmin-version
-  wget https://www.phpmyadmin.net/downloads/phpMyAdmin-latest-all-languages.zip
-  unzip phpMyAdmin-latest-all-languages.zip
-  # create folder /var/www/phpmyadmin and copy the unziped file
-  sudo mkdir /var/www/phpmyadmin
-  sudo cp -r phpMyAdmin-*/* /var/www/phpmyadmin/
-  # change rights
-  sudo chown -R ubuntu:ubuntu /var/www/phpmyadmin
-  sudo chmod -R 755 /var/www/phpmyadmin
-  # set configuration
-  sudo curl https://raw.githubusercontent.com/kparui2022/aws-cloudformation/main/settings/phpmyadmin.txt -o /etc/apache2/conf-available/phpmyadmin.conf
-  # Activate Configuration
-  sudo a2enconf phpmyadmin
-  # solve tmp error
-  sudo mkdir /var/www/phpmyadmin/tmp
-  sudo mkdir /var/www/phpmyadmin/tmp/twig
-  sudo chown -R ubuntu:ubuntu /var/www/phpmyadmin/tmp
-  sudo chmod -R 777 /var/www/phpmyadmin/tmp
-  sudo chown -R ubuntu:ubuntu /var/www/phpmyadmin/tmp/twig
-  sudo chmod -R 777 /var/www/phpmyadmin/tmp/twig
-  c="define('TEMP_DIR', './tmp/');"
-  d="define('TEMP_DIR', '/var/www/phpmyadmin/tmp');"
-  sudo sed -i "s|$c|$d|g" /var/www/phpmyadmin/libraries/vendor_config.php
-  # solve configuration error (blowfish_secret)
-  e="define('CONFIG_DIR', '');"
-  f="define('CONFIG_DIR', '/var/www/phpmyadmin/');"
-  sudo sed -i "s|$e|$f|g" /var/www/phpmyadmin/libraries/vendor_config.php
-  mv /var/www/phpmyadmin/config.sample.inc.php /var/www/phpmyadmin/config.inc.php
-  NEW_PASSWORD=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 32 | head -n 1)
-  j="blowfish_secret'] = '';"
-  k="blowfish_secret'] = '$NEW_PASSWORD';"
-  sudo sed -i "s|$j|$k|g" /var/www/phpmyadmin/config.inc.php
-fi
+# Download & unzip the last phpMyAdmin-version
+wget https://www.phpmyadmin.net/downloads/phpMyAdmin-latest-all-languages.zip
+unzip phpMyAdmin-latest-all-languages.zip
+# create folder /var/www/phpmyadmin and copy the unziped file
+sudo mkdir /var/www/phpmyadmin
+sudo cp -r phpMyAdmin-*/* /var/www/phpmyadmin/
+# change rights
+sudo chown -R ubuntu:ubuntu /var/www/phpmyadmin
+sudo chmod -R 755 /var/www/phpmyadmin
+# set configuration
+sudo curl https://raw.githubusercontent.com/kparui2022/aws-cloudformation/main/settings/phpmyadmin.txt -o /etc/apache2/conf-available/phpmyadmin.conf
+# Activate Configuration
+sudo a2enconf phpmyadmin
+# solve tmp error
+sudo mkdir /var/www/phpmyadmin/tmp
+sudo mkdir /var/www/phpmyadmin/tmp/twig
+sudo chown -R ubuntu:ubuntu /var/www/phpmyadmin/tmp
+sudo chmod -R 777 /var/www/phpmyadmin/tmp
+sudo chown -R ubuntu:ubuntu /var/www/phpmyadmin/tmp/twig
+sudo chmod -R 777 /var/www/phpmyadmin/tmp/twig
+c="define('TEMP_DIR', './tmp/');"
+d="define('TEMP_DIR', '/var/www/phpmyadmin/tmp');"
+sudo sed -i "s|$c|$d|g" /var/www/phpmyadmin/libraries/vendor_config.php
+# solve configuration error (blowfish_secret)
+e="define('CONFIG_DIR', '');"
+f="define('CONFIG_DIR', '/var/www/phpmyadmin/');"
+sudo sed -i "s|$e|$f|g" /var/www/phpmyadmin/libraries/vendor_config.php
+mv /var/www/phpmyadmin/config.sample.inc.php /var/www/phpmyadmin/config.inc.php
+NEW_PASSWORD=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 32 | head -n 1)
+j="blowfish_secret'] = '';"
+k="blowfish_secret'] = '$NEW_PASSWORD';"
+sudo sed -i "s|$j|$k|g" /var/www/phpmyadmin/config.inc.php
 
 sudo systemctl reload apache2
 
